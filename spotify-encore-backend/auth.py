@@ -41,4 +41,9 @@ def profile(request: Request):
         return {"error": "User not authenticated"}
 
     return {"message": "User authenticated successfully", "access_token": access_token}
+
+@router.get("/logout")
+def logout(request: Request): 
+    request.session.clear() 
+    return RedirectResponse(url="/login")
     
