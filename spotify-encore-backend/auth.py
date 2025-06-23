@@ -27,4 +27,18 @@ def callback(request: Request):
         return {"error": "No code provided in callback"}
     
     token_info = spotify_oauth.get_access_token(code)
-    return { "access_token": token_info["access_token"], "refresh_token": token_info["refresh_token"] }
+
+    request.session["access_token"] = token_info["access_token"] 
+    request.session["refresh_token"] = token_info["refresh_token"]
+
+    return RedirectResponse(url="/auth/profile") 
+
+@router.get("/profile")
+def profile(request: Request): 
+    access_token = request.session.get("access_token")
+
+    if not access_token: 
+        return {"error": "User not authenticated"}
+
+    return {"message": "User authenticated successfully", "access_token": access_token}
+    

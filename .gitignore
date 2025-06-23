@@ -6,4 +6,4 @@ __pychache__/
 *.pyc 
 
 # Ignore environment variables
-.env 
+.env
